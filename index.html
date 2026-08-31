@@ -226,23 +226,31 @@
   #jdot{ fill:#fff8e1; }
   #jhalo{ fill:rgba(212,175,55,.3); animation:haloPulse 2.2s ease-in-out infinite; }
   @keyframes haloPulse{ 0%,100%{ opacity:.9 } 50%{ opacity:.35 } }
-  .jstop{ opacity:.28; transition:opacity .65s ease; }
+  .jstop{ opacity:.28; transition:opacity .3s ease; transform-box:fill-box; transform-origin:center; }
   .jstop.lit{ opacity:1; }
   .jstop rect{
-    fill:var(--ink); stroke:var(--gold); stroke-width:1.5;
-    transition:fill .5s ease;
+    fill:#231b0f; stroke:var(--gold); stroke-width:1.5;
+    transition:filter .3s ease;
   }
-  .jstop.lit rect{ fill:var(--gold); filter:drop-shadow(0 0 6px rgba(212,175,55,.9)); }
+  .jstop.lit rect{ filter:drop-shadow(0 0 8px rgba(212,175,55,.55)); }
+  .jstop.lit{
+    animation:stopPop .45s cubic-bezier(.34,1.6,.4,1);
+  }
+  @keyframes stopPop{
+    0%{ transform:scale(1) }
+    40%{ transform:scale(1.06) }
+    100%{ transform:scale(1) }
+  }
   .j-day{
     font-family:var(--sans); font-weight:300; font-size:13px; letter-spacing:2px;
-    fill:var(--ivory-faint); text-anchor:middle;
+    fill:var(--ivory-faint); text-anchor:middle; transition:fill .35s ease;
   }
   .j-evt{
     font-family:var(--serif); font-weight:500; font-size:31px; letter-spacing:.5px;
-    fill:var(--gold-pale); text-anchor:middle;
+    fill:rgba(255,255,255,.45); text-anchor:middle; transition:fill .35s ease;
   }
-  .jstop .j-evt{ transition:fill .5s ease; }
-  .jstop:not(.lit) .j-evt{ fill:rgba(240,223,174,.5); }
+  .jstop.lit .j-day{ fill:rgba(245,239,224,.75); }
+  .jstop.lit .j-evt{ fill:#ffffff; }
 
   /* scroll-scrubbed zoom wrappers */
   .df-zoom, .mono-zoom{ display:inline-block; will-change:transform; }
@@ -753,9 +761,10 @@
     jhalo.setAttribute('transform', tf);
     jhalo.setAttribute('opacity', '0.85');
 
-    // light each stop once the marker passes it
+    // light each stop the moment the marker reaches it — one snap per block
     for (var i=0;i<N_STOPS;i++){
-      jstops[i].classList.toggle('lit', t >= (i + 0.5) / N_STOPS);
+      var threshold = (i + 1) / (N_STOPS + 0.5); // discrete, evenly spaced
+      jstops[i].classList.toggle('lit', t >= threshold);
     }
   }
 
