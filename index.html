@@ -200,6 +200,58 @@
     font-size:clamp(10px,3.2vw,12px); color:var(--ivory-faint); margin-top:18px;
     padding-left:.34em;
   }
+
+  /* --- Apple-style pinned journey: the road to the big day --- */
+  .journey{ position:relative; height:340vh; }
+  .j-sticky{
+    position:sticky; top:0; height:100vh; height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:4px; padding:16px 20px; overflow:hidden; position:sticky;
+  }
+  .j-sticky::before{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(60% 42% at 50% 46%, rgba(212,175,55,.07), transparent 72%);
+  }
+  .j-eyebrow{ margin-bottom:0 }
+  .j-title{ margin-bottom:2px; font-size:clamp(28px,8vw,48px); }
+  .j-svg{ height:min(58vh,540px); width:auto; max-width:88vw; overflow:visible; }
+  .j-base{
+    fill:none; stroke:rgba(212,175,55,.3); stroke-width:1.5;
+    stroke-dasharray:1 8; stroke-linecap:round;
+  }
+  .j-prog{
+    fill:none; stroke:var(--gold); stroke-width:2.5; stroke-linecap:round;
+    filter:drop-shadow(0 0 7px rgba(212,175,55,.85));
+  }
+  #jdot{ fill:#fff8e1; }
+  #jhalo{ fill:rgba(212,175,55,.3); animation:haloPulse 2.2s ease-in-out infinite; }
+  @keyframes haloPulse{ 0%,100%{ opacity:.9 } 50%{ opacity:.35 } }
+  .jstop{ opacity:.28; transition:opacity .65s ease; }
+  .jstop.lit{ opacity:1; }
+  .jstop rect{
+    fill:var(--ink); stroke:var(--gold); stroke-width:1.5;
+    transition:fill .5s ease;
+  }
+  .jstop.lit rect{ fill:var(--gold); filter:drop-shadow(0 0 6px rgba(212,175,55,.9)); }
+  .j-day{
+    font-family:var(--sans); font-weight:300; font-size:13px; letter-spacing:2px;
+    fill:var(--ivory-faint); text-anchor:middle;
+  }
+  .j-evt{
+    font-family:var(--serif); font-weight:500; font-size:31px; letter-spacing:.5px;
+    fill:var(--gold-pale); text-anchor:middle;
+  }
+  .jstop .j-evt{ transition:fill .5s ease; }
+  .jstop:not(.lit) .j-evt{ fill:rgba(240,223,174,.5); }
+
+  /* scroll-scrubbed zoom wrappers */
+  .df-zoom, .mono-zoom{ display:inline-block; will-change:transform; }
+
+  @media (prefers-reduced-motion: reduce){
+    .journey{ height:auto; }
+    .j-sticky{ position:relative; height:auto; padding:70px 20px; }
+    #jhalo{ animation:none; }
+  }
   .maplink{
     display:inline-block; margin-top:34px;
     position:relative; overflow:hidden;
@@ -464,35 +516,86 @@
       </div>
     </section>
 
-    <!-- 3 : date & time -->
+    <!-- 3 : walima -->
     <section class="scene" data-scene="2">
       <div class="inner">
-        <p class="eyebrow reveal d1">Save the date</p>
+        <p class="eyebrow reveal d1">The Walima &nbsp;·&nbsp; Everyone is invited</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
-        <div class="date-frame bloom d3">
-          <p class="date-num">13</p>
+        <div class="df-zoom"><div class="date-frame bloom d3">
+          <p class="date-num">11</p>
           <p class="date-month">November</p>
-          <p class="date-year">Friday · 2026</p>
-        </div>
-        <p class="body-copy reveal d5" style="margin-top:28px;">at <span class="gold-inline">8:00</span> in the evening</p>
+          <p class="date-year">Wednesday · 2026</p>
+        </div></div>
+        <p class="body-copy reveal d4" style="margin-top:26px;">Doors open at <span class="gold-inline">8:00</span> in the evening</p>
+        <p class="body-copy reveal d5">Bridal entry at <span class="gold-inline">9:00</span></p>
+        <p class="body-copy reveal d6">Followed by dinner</p>
       </div>
     </section>
 
-    <!-- 4 : venue -->
+    <!-- 4 : walima venue -->
     <section class="scene" data-scene="3">
       <div class="inner">
-        <p class="eyebrow reveal d1">The celebration</p>
+        <p class="eyebrow reveal d1">The Venue</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <h2 class="venue reveal d3"><span class="letters" data-text="SR Ground"></span></h2>
-        <p class="venue-sub reveal d4">Reception to follow</p>
+        <p class="venue-sub reveal d4">We look forward to welcoming you</p>
         <a class="maplink reveal d5" href="https://share.google/U3ceDTOoXN9UWjmRf" target="_blank" rel="noopener">Open in Google Maps</a>
       </div>
     </section>
 
-    <!-- 5 : closing -->
+    <!-- 5 : sangeet -->
     <section class="scene" data-scene="4">
       <div class="inner">
-        <div class="monogram-wrap reveal d1"><div class="rays"></div><div class="monogram">H &amp; I</div></div>
+        <p class="eyebrow reveal d1">The Sangeet</p>
+        <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
+        <p class="script-line reveal d3" style="font-size:clamp(38px,12vw,84px);">Dance &amp; Dhamal</p>
+        <p class="body-copy reveal d4">from <span class="gold-inline">5:00</span> PM onwards</p>
+        <h2 class="venue reveal d5" style="font-size:clamp(28px,9vw,60px); margin-top:18px;">White Villa</h2>
+        <p class="venue-sub reveal d6">Naddi Naka</p>
+        <a class="maplink reveal d6" href="https://www.google.com/maps/search/?api=1&amp;query=White+Villa+Naddi+Naka" target="_blank" rel="noopener">Open in Google Maps</a>
+      </div>
+    </section>
+
+    <!-- 6 : wedding week — pinned journey -->
+    <section class="scene" data-scene="5" style="min-height:0; padding:0;">
+      <div class="journey">
+        <div class="j-sticky">
+          <p class="eyebrow j-eyebrow">For Our Close Family</p>
+          <p class="script-line j-title">The Road to the Big Day</p>
+          <svg class="j-svg" viewBox="0 0 460 620" aria-label="Wedding week journey">
+            <path class="j-base" d="M 90 560 C 90 480, 340 470, 340 390 C 340 390, 110 380, 110 300 C 110 220, 350 210, 350 130 C 350 90, 300 70, 230 60"/>
+            <path class="j-prog" id="jprog" d="M 90 560 C 90 480, 340 470, 340 390 C 340 390, 110 380, 110 300 C 110 220, 350 210, 350 130 C 350 90, 300 70, 230 60"/>
+            <g class="jstop" data-stop="0">
+              <rect x="26" y="536" width="128" height="48" rx="6"/>
+              <text class="j-day" x="90" y="556">SAT · NOV 7</text>
+              <text class="j-evt" x="90" y="578">Mehndi</text>
+            </g>
+            <g class="jstop" data-stop="1">
+              <rect x="276" y="366" width="128" height="48" rx="6"/>
+              <text class="j-day" x="340" y="386">MON · NOV 9</text>
+              <text class="j-evt" x="340" y="408">Pankhana</text>
+            </g>
+            <g class="jstop" data-stop="2">
+              <rect x="46" y="276" width="128" height="48" rx="6"/>
+              <text class="j-day" x="110" y="296">TUE · NOV 10</text>
+              <text class="j-evt" x="110" y="318">Nikah</text>
+            </g>
+            <g class="jstop" data-stop="3">
+              <rect x="286" y="46" width="128" height="48" rx="6"/>
+              <text class="j-day" x="350" y="66">WED · NOV 11</text>
+              <text class="j-evt" x="350" y="88">Walima</text>
+            </g>
+            <circle id="jdot" r="6"/>
+            <circle id="jhalo" r="16"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 : closing -->
+    <section class="scene" data-scene="6">
+      <div class="inner">
+        <div class="mono-zoom"><div class="monogram-wrap reveal d1"><div class="rays"></div><div class="monogram">H &amp; I</div></div></div>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <p class="body-copy reveal d3">Awaiting your gracious presence</p>
         <p class="body-copy reveal d4">to bless the couple on their new journey</p>
@@ -610,6 +713,73 @@
   window.addEventListener('scroll', function(){
     if (!ticking){ requestAnimationFrame(onScroll); ticking = true; }
   }, { passive:true });
+
+  /* ============ Apple-style pinned journey (road to the big day) ============ */
+  var journey = document.querySelector('.journey');
+  var jprog = document.getElementById('jprog');
+  var jdot = document.getElementById('jdot');
+  var jhalo = document.getElementById('jhalo');
+  var jstops = Array.prototype.slice.call(document.querySelectorAll('.jstop'));
+  var N_STOPS = jstops.length;
+  var zooms = Array.prototype.slice.call(document.querySelectorAll('.df-zoom, .mono-zoom'));
+
+  var jPathLen = 0;
+  if (journey && jprog){
+    jPathLen = jprog.getTotalLength();
+    jprog.style.strokeDasharray = jPathLen;
+    jprog.style.strokeDashoffset = jPathLen;
+    jprog.getBoundingClientRect(); // flush initial styles
+  }
+
+  function pathPoint(t){ // t in [0,1]
+    return jprog.getPointAtLength(Math.max(0, Math.min(1, t)) * jPathLen);
+  }
+
+  function updateJourney(){
+    if (!journey || !jprog || jPathLen <= 0) return;
+    var r = journey.getBoundingClientRect();
+    var total = r.height - window.innerHeight;
+    if (total <= 0) return;
+    var t = Math.max(0, Math.min(1, -r.top / total));
+
+    // glowing road draws itself
+    jprog.style.strokeDashoffset = jPathLen * (1 - t);
+
+    // marker rides the road, oriented along it
+    var pt = pathPoint(t);
+    var pt2 = pathPoint(Math.min(1, t + 0.008));
+    var tf = 'translate(' + pt.x.toFixed(1) + 'px,' + pt.y.toFixed(1) + 'px)';
+    jdot.setAttribute('transform', tf);
+    jhalo.setAttribute('transform', tf);
+    jhalo.setAttribute('opacity', '0.85');
+
+    // light each stop once the marker passes it
+    for (var i=0;i<N_STOPS;i++){
+      jstops[i].classList.toggle('lit', t >= (i + 0.5) / N_STOPS);
+    }
+  }
+
+  function updateZooms(){
+    var vh = window.innerHeight;
+    zooms.forEach(function(z){
+      var r = z.getBoundingClientRect();
+      // 0 when the element's center is at the viewport bottom, 1 at center
+      var t = 1 - Math.min(1, Math.max(0, (r.top + r.height/2) / vh));
+      var e = t * t * (3 - 2 * t); // smoothstep
+      z.style.transform = 'scale(' + (0.82 + 0.18 * e).toFixed(3) + ')';
+    });
+  }
+
+  // fold journey + zooms into the rAF-batched scroll handler
+  var origOnScroll = onScroll;
+  onScroll = function(){
+    origOnScroll();
+    updateJourney();
+    updateZooms();
+  };
+  updateJourney();
+  updateZooms();
+  window.addEventListener('resize', function(){ updateJourney(); updateZooms(); });
 
   /* ============ audio engine (synthesized ambient piano) ============ */
   var audio = {
