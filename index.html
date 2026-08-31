@@ -170,8 +170,9 @@
   .date-frame::before{ top:-1px; left:-1px; border-top-width:1px; border-left-width:1px; }
   .date-frame::after{ bottom:-1px; right:-1px; border-bottom-width:1px; border-right-width:1px; }
   .date-num{
-    font-family:var(--serif); font-weight:500; color:var(--ivory);
+    font-family:var(--sans); font-weight:300; color:var(--ivory);
     font-size:clamp(58px,17vw,104px); line-height:1;
+    letter-spacing:.06em; text-indent:.06em;
     text-shadow:0 0 34px rgba(212,175,55,.25);
   }
   .scene.in-view .date-num{
@@ -645,6 +646,11 @@
 <script>
 (function(){
   "use strict";
+
+  /* ============ always start fresh on reload ============ */
+  if ('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+  window.addEventListener('unload', function(){ window.scrollTo(0, 0); });
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
