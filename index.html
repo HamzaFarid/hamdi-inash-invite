@@ -370,6 +370,32 @@
     opacity:0; pointer-events:none;
     transition:opacity 1.1s ease, transform 1.1s ease;
   }
+  /* light spilling out of the envelope mouth */
+  .env-spill{
+    position:absolute; left:50%; bottom:52%; z-index:1;
+    width:64%; height:150%;
+    transform:translateX(-50%) translateY(30%) scaleY(.15);
+    transform-origin:bottom center;
+    border-radius:50% 50% 6px 6px / 60% 60% 6px 6px;
+    background:linear-gradient(to top,
+      rgba(255,240,200,.75) 0%,
+      rgba(255,240,200,.4) 35%,
+      rgba(240,205,110,.16) 70%,
+      transparent 100%);
+    opacity:0; pointer-events:none;
+    transition:opacity 1s ease, transform 1s cubic-bezier(.3,.9,.3,1);
+  }
+  #intro.open .env-spill{
+    opacity:1;
+    transform:translateX(-50%) translateY(-8%) scaleY(1);
+    transition-delay:1.15s;
+  }
+  /* the card lifts out riding the spill light */
+  #intro.open .env-card{
+    transform:translate(-50%,-150%) translateZ(40px) rotateX(4deg);
+    transition:transform 1.25s cubic-bezier(.3,1.15,.35,1) 2.05s, box-shadow 1.25s ease 2.05s;
+    box-shadow:0 24px 60px rgba(0,0,0,.5), 0 0 34px rgba(240,205,110,.35);
+  }
   .envelope{
     position:relative; z-index:1; width:min(300px,78vw); height:min(200px,52vw);
     transform-style:preserve-3d;
@@ -426,9 +452,26 @@
     position:absolute; left:0; top:0; width:100%; height:52%; z-index:4;
     transform-origin:top center;
     transform-style:preserve-3d;
-    transition:transform 1.4s cubic-bezier(.4,.1,.3,1);
-    filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));
+    transition:none;
   }
+  /* rush through edge-on (90°) so the lid never seems to vanish */
+  #intro.open .env-flap{ animation:flapOpen 1.35s cubic-bezier(.5,.05,.35,1) .15s both; }
+  @keyframes flapOpen{
+    0%{ transform:rotateX(0deg); }
+    38%{ transform:rotateX(-72deg); animation-timing-function:cubic-bezier(.55,.02,.5,1); }
+    58%{ transform:rotateX(-118deg); }
+    100%{ transform:rotateX(-180deg); }
+  }
+  /* bright fold-glint that flashes as the lid passes edge-on */
+  .env-fold{
+    position:absolute; left:5%; right:70%; top:-1px; height:2px; z-index:6;
+    background:linear-gradient(90deg, transparent, #e8cf8a 30%, #fff3cf 50%, #e8cf8a 70%, transparent);
+    border-radius:2px; opacity:0; pointer-events:none;
+    box-shadow:0 0 8px rgba(212,175,55,.8);
+    transform:translateZ(1.5px);
+  }
+  #intro.open .env-fold{ animation:foldGlint 1.35s linear .15s both; }
+  @keyframes foldGlint{ 0%,38%{ opacity:0 } 46%{ opacity:1 } 58%,100%{ opacity:0 } }
   .env-flap-front, .env-flap-back{
     position:absolute; inset:0;
     backface-visibility:hidden; -webkit-backface-visibility:hidden;
@@ -436,13 +479,14 @@
   .env-flap-front{
     background:linear-gradient(180deg, #4a3c22 0%, #2c2312 100%);
     clip-path:polygon(0 0, 100% 0, 50% 100%);
-    box-shadow:inset 0 0 0 1px rgba(212,175,55,.3);
+    box-shadow:inset 0 0 0 1px rgba(212,175,55,.3), 0 3px 5px rgba(0,0,0,.35);
+    transform:translateZ(0.1px);
   }
   .env-flap-back{
     background:linear-gradient(180deg, #5a4a2a 0%, #3a2f1c 100%);
     clip-path:polygon(0 100%, 100% 100%, 50% 0);
     box-shadow:inset 0 0 0 1px rgba(212,175,55,.2);
-    transform:rotateX(180deg);
+    transform:rotateX(180deg) translateZ(0.1px);
   }
   .env-seal{
     position:absolute; left:50%; top:50%; z-index:5;
@@ -452,6 +496,7 @@
     display:flex; align-items:center; justify-content:center;
     font-family:var(--serif); color:#3a2c0e; font-size:19px; font-weight:500;
     line-height:1; letter-spacing:.03em; white-space:nowrap;
+    transform:translateZ(2px);
     transition:transform .45s ease, opacity .45s ease;
   }
   .env-seal::after{
@@ -461,10 +506,10 @@
 
   /* opened states */
   #intro.open .envelope{ animation-play-state:paused; }
-  #intro.open .env-seal{ transform:scale(1.7); opacity:0; }
-  #intro.open .env-flap{ transform:rotateX(-180deg); transition-delay:.15s; }
-  #intro.open .env-glow{ opacity:1; transform:translate(-50%,-50%) scale(1); transition-delay:1.5s; }
-  #intro.open .env-card{ transform:translate(-50%,-150%) translateZ(40px) rotateX(4deg); transition-delay:2.2s; }
+  #intro.open .env-seal{ transform:translateZ(2px) scale(1.7); opacity:0; transition-delay:0s; }
+  #intro.open .env-flap{ transition-delay:.15s; }
+  #intro.open .env-glow{ opacity:1; transform:translate(-50%,-50%) scale(1); transition-delay:1.55s; }
+  /* (card lift now defined with .env-spill above) */
 
   .tap{
     font-family:var(--sans); font-weight:300; letter-spacing:.4em; text-transform:uppercase;
@@ -638,6 +683,7 @@
       <div class="envelope">
         <div class="env-back"></div>
         <div class="env-liner"></div>
+        <div class="env-spill"></div>
         <div class="env-card">
           <div class="mini-mono">Hamdi &amp; Inash</div>
           <div class="mini-rule"></div>
@@ -648,6 +694,7 @@
           <div class="env-flap-front"></div>
           <div class="env-flap-back"></div>
         </div>
+        <div class="env-fold"></div>
         <div class="env-seal">H&amp;I</div>
       </div>
     </div>
