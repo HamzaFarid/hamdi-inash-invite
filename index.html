@@ -201,12 +201,12 @@
     padding-left:.34em;
   }
 
-  /* --- Apple-style pinned journey: the road to the big day --- */
-  .journey{ position:relative; height:340vh; }
+  /* --- Apple-style journey: the road to the big day (self-playing) --- */
+  .journey{ position:relative; }
   .j-sticky{
-    position:sticky; top:0; height:100vh; height:100svh;
+    position:relative; min-height:100vh; min-height:100svh;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:4px; padding:16px 20px; overflow:hidden; position:sticky;
+    gap:4px; padding:16px 20px; overflow:hidden;
   }
   .j-sticky::before{
     content:''; position:absolute; inset:0; pointer-events:none;
@@ -722,7 +722,7 @@
     if (!ticking){ requestAnimationFrame(onScroll); ticking = true; }
   }, { passive:true });
 
-  /* ============ Apple-style pinned journey (road to the big day) ============ */
+  /* ============ Apple-style journey (self-playing on arrival) ============ */
   var journey = document.querySelector('.journey');
   var jprog = document.getElementById('jprog');
   var jdot = document.getElementById('jdot');
@@ -743,29 +743,53 @@
     return jprog.getPointAtLength(Math.max(0, Math.min(1, t)) * jPathLen);
   }
 
-  function updateJourney(){
-    if (!journey || !jprog || jPathLen <= 0) return;
-    var r = journey.getBoundingClientRect();
-    var total = r.height - window.innerHeight;
-    if (total <= 0) return;
-    var t = Math.max(0, Math.min(1, -r.top / total));
-
-    // glowing road draws itself
+  // paint the journey at progress t (0..1)
+  function paintJourney(t){
     jprog.style.strokeDashoffset = jPathLen * (1 - t);
 
-    // marker rides the road, oriented along it
     var pt = pathPoint(t);
-    var pt2 = pathPoint(Math.min(1, t + 0.008));
     var tf = 'translate(' + pt.x.toFixed(1) + 'px,' + pt.y.toFixed(1) + 'px)';
     jdot.setAttribute('transform', tf);
     jhalo.setAttribute('transform', tf);
-    jhalo.setAttribute('opacity', '0.85');
+    jhalo.setAttribute('opacity', t > 0.001 ? '0.85' : '0');
 
-    // light each stop the moment the marker reaches it — one snap per block
     for (var i=0;i<N_STOPS;i++){
-      var threshold = (i + 1) / (N_STOPS + 0.5); // discrete, evenly spaced
-      jstops[i].classList.toggle('lit', t >= threshold);
+      jstops[i].classList.toggle('lit', t >= (i + 1) / (N_STOPS + 0.5));
     }
+  }
+
+  // eased self-play over ~11s once the section becomes visible
+  var jPlayed = false, jRaf = 0;
+  function playJourney(){
+    if (jPlayed || !jprog || jPathLen <= 0) return;
+    jPlayed = true;
+    var DUR = 11000;
+    var t0 = null;
+    function step(ts){
+      if (!t0) t0 = ts;
+      var u = Math.min(1, (ts - t0) / DUR);
+      // ease-in-out so the ride accelerates gently and settles
+      var e = u < 0.5 ? 2*u*u : 1 - Math.pow(-2*u + 2, 2)/2;
+      paintJourney(e);
+      if (u < 1){ jRaf = requestAnimationFrame(step); }
+      else { paintJourney(1); }
+    }
+    jRaf = requestAnimationFrame(step);
+  }
+
+  var jObserver = null;
+  if ('IntersectionObserver' in window && journey){
+    jObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){
+          playJourney();
+          jObserver.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.45 });
+    jObserver.observe(journey);
+  } else if (journey){
+    paintJourney(1); // very old browser fallback
   }
 
   function updateZooms(){
@@ -779,16 +803,14 @@
     });
   }
 
-  // fold journey + zooms into the rAF-batched scroll handler
+  // fold zooms into the rAF-batched scroll handler
   var origOnScroll = onScroll;
   onScroll = function(){
     origOnScroll();
-    updateJourney();
     updateZooms();
   };
-  updateJourney();
   updateZooms();
-  window.addEventListener('resize', function(){ updateJourney(); updateZooms(); });
+  window.addEventListener('resize', function(){ updateZooms(); });
 
   /* ============ audio engine (synthesized ambient piano) ============ */
   var audio = {
