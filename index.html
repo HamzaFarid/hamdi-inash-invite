@@ -3,13 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0d0a08" />
 <title>Hamdi &amp; Inash — Wedding Invitation</title>
-<meta name="description" content="Together with their families, Hamdi Farid & Inash Kharbe request the honour of your presence at their wedding." />
+<meta name="description" content="With your families, Hamdi Farid & Inash Kharbe request the honour of your presence at their wedding." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
 <style>
   :root{
+    color-scheme:dark; /* stop browser themes from re-tinting the page */
     --ink:#0d0a08;
     --ink-2:#16110c;
     --gold:#d4af37;
@@ -194,6 +197,15 @@
     font-family:var(--sans); font-weight:300; letter-spacing:.34em; text-transform:uppercase;
     font-size:clamp(10px,3vw,12px); color:var(--ivory-faint); margin-top:14px;
     padding-left:.34em;
+  }
+  /* compact date chip for the other events */
+  .date-chip{
+    display:inline-block;
+    font-family:var(--sans); font-weight:300; letter-spacing:.3em; text-transform:uppercase;
+    font-size:clamp(10px,3.1vw,13px); color:var(--gold-pale);
+    padding:12px 26px 12px calc(26px + .3em);
+    border:1px solid rgba(212,175,55,.4); border-radius:999px;
+    background:rgba(212,175,55,.06);
   }
 
   .venue{
@@ -557,7 +569,7 @@
     <!-- 1 : invitation -->
     <section class="scene" data-scene="0">
       <div class="inner">
-        <p class="eyebrow reveal d1">Together with their families</p>
+        <p class="eyebrow reveal d1">With your families</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <p class="body-copy reveal d3">request the honour of your presence</p>
         <p class="body-copy reveal d4">at the wedding celebration of</p>
@@ -567,7 +579,6 @@
     <!-- 2 : names -->
     <section class="scene" data-scene="1">
       <div class="inner">
-        <p class="script-line reveal d1">the wedding of</p>
         <h1 class="names">
           <span class="shine"></span>
           <span class="letters name-line" data-text="Hamdi Farid"></span>
@@ -577,10 +588,55 @@
       </div>
     </section>
 
-    <!-- 3 : walima -->
+    <!-- 3 : mehndi — Nov 7 -->
     <section class="scene" data-scene="2">
       <div class="inner">
-        <p class="eyebrow reveal d1">The Walima &nbsp;·&nbsp; Everyone is invited</p>
+        <p class="eyebrow reveal d1">The Mehndi</p>
+        <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
+        <p class="date-chip reveal d3">Saturday · 7th November</p>
+        <p class="body-copy reveal d4" style="margin-top:30px;">Ladies will go to the bride's house by <span class="gold-inline">8:00</span> PM</p>
+        <p class="body-copy reveal d5">Men will enjoy at White Villa — dinner and fun till their better halves come home to give you gossip</p>
+      </div>
+    </section>
+
+    <!-- 4 : sangeet — Nov 8 -->
+    <section class="scene" data-scene="3">
+      <div class="inner">
+        <p class="eyebrow reveal d1">The Sangeet</p>
+        <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
+        <p class="script-line reveal d3" style="font-size:clamp(38px,12vw,84px);">Dance &amp; Dhamal</p>
+        <p class="date-chip reveal d4" style="margin-top:10px;">8th November</p>
+        <p class="body-copy reveal d5" style="margin-top:24px;">from <span class="gold-inline">5:00</span> PM onwards</p>
+        <h2 class="venue reveal d5" style="font-size:clamp(28px,9vw,60px); margin-top:18px;">White Villa</h2>
+        <p class="venue-sub reveal d6">Naddi Naka</p>
+        <a class="maplink reveal d6" href="https://www.google.com/maps/search/?api=1&amp;query=White+Villa+Naddi+Naka" target="_blank" rel="noopener">Open in Google Maps</a>
+      </div>
+    </section>
+
+    <!-- 5 : pankhana — Nov 9 -->
+    <section class="scene" data-scene="3b">
+      <div class="inner">
+        <p class="eyebrow reveal d1">The Pankhana</p>
+        <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
+        <p class="date-chip reveal d3">Monday · 9th November</p>
+        <p class="body-copy reveal d4" style="margin-top:30px;">An evening of blessings at the bride's home</p>
+      </div>
+    </section>
+
+    <!-- 6 : nikah — Nov 10 -->
+    <section class="scene" data-scene="3c">
+      <div class="inner">
+        <p class="eyebrow reveal d1">The Nikah</p>
+        <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
+        <p class="date-chip reveal d3">Tuesday · 10th November</p>
+        <p class="body-copy reveal d4" style="margin-top:30px;">We all leave for the Nikah by <span class="gold-inline">8:00</span> PM to the bride's venue</p>
+      </div>
+    </section>
+
+    <!-- 7 : walima — Nov 11 -->
+    <section class="scene" data-scene="3d">
+      <div class="inner">
+        <p class="eyebrow reveal d1">The Walima</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <div class="df-zoom"><div class="date-frame bloom d3">
           <p class="date-num">11<sup class="date-ord">th</sup></p>
@@ -593,8 +649,8 @@
       </div>
     </section>
 
-    <!-- 4 : walima venue -->
-    <section class="scene" data-scene="3">
+    <!-- 8 : walima venue -->
+    <section class="scene" data-scene="4">
       <div class="inner">
         <p class="eyebrow reveal d1">The Venue</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
@@ -604,24 +660,10 @@
       </div>
     </section>
 
-    <!-- 5 : sangeet -->
-    <section class="scene" data-scene="4">
-      <div class="inner">
-        <p class="eyebrow reveal d1">The Sangeet</p>
-        <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
-        <p class="script-line reveal d3" style="font-size:clamp(38px,12vw,84px);">Dance &amp; Dhamal</p>
-        <p class="body-copy reveal d4">from <span class="gold-inline">5:00</span> PM onwards</p>
-        <h2 class="venue reveal d5" style="font-size:clamp(28px,9vw,60px); margin-top:18px;">White Villa</h2>
-        <p class="venue-sub reveal d6">Naddi Naka</p>
-        <a class="maplink reveal d6" href="https://www.google.com/maps/search/?api=1&amp;query=White+Villa+Naddi+Naka" target="_blank" rel="noopener">Open in Google Maps</a>
-      </div>
-    </section>
-
-    <!-- 6 : wedding week — pinned journey -->
+    <!-- 7 : wedding week — pinned journey -->
     <section class="scene" data-scene="5" style="min-height:0; padding:0;">
       <div class="journey">
         <div class="j-sticky">
-          <p class="eyebrow j-eyebrow">For Our Close Family</p>
           <p class="script-line j-title">The Road to the Big Day</p>
           <svg class="j-svg" viewBox="0 0 460 620" aria-label="Wedding week journey">
             <path class="j-base" d="M 90 560 C 90 480, 340 470, 340 390 C 340 390, 110 380, 110 300 C 110 220, 350 210, 350 130 C 350 90, 300 70, 230 60"/>
