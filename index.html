@@ -118,9 +118,13 @@
   /* typography */
   .eyebrow{
     font-family:var(--sans); font-weight:300; letter-spacing:.42em; text-transform:uppercase;
-    font-size:clamp(10px,3.4vw,13px); color:var(--gold-soft); margin-bottom:26px;
+    font-size:clamp(13px,4.4vw,18px); color:var(--gold-soft); margin-bottom:26px;
     padding-left:.42em; /* re-center tracked text */
   }
+  /* keep units that belong together on one line, at any screen size */
+  .nowrap{ white-space:nowrap; display:inline-block; }
+  .names-line{ white-space:nowrap; font-size:clamp(10px,2.9vw,13px); letter-spacing:.3em; padding-left:.3em; }
+  @media (max-width:360px){ .names-line{ font-size:9px; letter-spacing:.22em; } }
   .script-line{
     font-family:var(--script); font-weight:400; color:var(--gold-pale);
     font-size:clamp(30px,9vw,58px); line-height:1.15; margin-bottom:14px;
@@ -580,10 +584,9 @@
     <!-- 1 : invitation -->
     <section class="scene" data-scene="0">
       <div class="inner">
-        <p class="eyebrow reveal d1">With your families</p>
+        <p class="eyebrow reveal d1">You are invited with your family</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
-        <p class="body-copy reveal d3">request the honour of your presence</p>
-        <p class="body-copy reveal d4">at the wedding celebration of</p>
+        <p class="body-copy reveal d3">Come celebrate five fabulous days of shaadi, shor-sharaba &amp; full-on masti!</p>
       </div>
     </section>
 
@@ -602,22 +605,22 @@
     <!-- 3 : mehndi — Nov 7 -->
     <section class="scene" data-scene="2">
       <div class="inner">
-        <p class="eyebrow reveal d1">The Mehndi</p>
+        <p class="eyebrow reveal d1">Mehndi</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <p class="date-chip reveal d3">Saturday · 7th November</p>
-        <p class="body-copy reveal d4" style="margin-top:30px;">Ladies will go to the bride's house by <span class="gold-inline">8:00</span> PM</p>
-        <p class="body-copy reveal d5">Men will enjoy at White Villa — dinner and fun till their better halves come home to give you gossip</p>
+        <p class="body-copy reveal d4" style="margin-top:30px;"><span class="nowrap">Ladies leave for the bride's house</span> <span class="nowrap">by <span class="gold-inline">8:00&nbsp;PM</span></span></p>
+        <p class="body-copy reveal d5">Men: dinner &amp; drinks at White Villa while you wait for the gossip to arrive!</p>
       </div>
     </section>
 
     <!-- 4 : sangeet — Nov 8 -->
     <section class="scene" data-scene="3">
       <div class="inner">
-        <p class="eyebrow reveal d1">The Sangeet</p>
+        <p class="eyebrow reveal d1">Sangeet</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <p class="script-line reveal d3" style="font-size:clamp(38px,12vw,84px);">Dance &amp; Dhamal</p>
         <p class="date-chip reveal d4" style="margin-top:10px;">8th November</p>
-        <p class="body-copy reveal d5" style="margin-top:24px;">from <span class="gold-inline">5:00</span> PM onwards</p>
+        <p class="body-copy reveal d5" style="margin-top:24px;"><span class="gold-inline nowrap">5:00&nbsp;PM</span> <span class="nowrap">onwards</span></p>
         <p class="body-copy reveal d6">Join us for tea and snacks followed by dinner and dance</p>
         <h2 class="venue reveal d6" style="font-size:clamp(28px,9vw,60px); margin-top:18px;">White Villa</h2>
         <p class="venue-sub reveal d6">Naddi Naka</p>
@@ -627,10 +630,11 @@
     <!-- 5 : pankhana — Nov 9 -->
     <section class="scene" data-scene="3b">
       <div class="inner">
-        <p class="eyebrow reveal d1">The Pankhana</p>
+        <p class="eyebrow reveal d1">Pankhana</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <p class="date-chip reveal d3">Monday · 9th November</p>
-        <p class="body-copy reveal d4" style="margin-top:30px;">Join us to bless Hamdi's last bachelor night followed by dinner</p>
+        <p class="body-copy reveal d4" style="margin-top:30px;">Join us to celebrate Hamdi&rsquo;s last night as a bachelor</p>
+        <p class="body-copy reveal d5"><span class="nowrap">Dinner at <span class="gold-inline">8:00&nbsp;PM</span></span></p>
         <h2 class="venue reveal d5" style="font-size:clamp(28px,9vw,60px); margin-top:18px;">White Villa</h2>
         <p class="venue-sub reveal d6">Naddi Naka</p>
       </div>
@@ -639,25 +643,25 @@
     <!-- 6 : nikah — Nov 10 -->
     <section class="scene" data-scene="3c">
       <div class="inner">
-        <p class="eyebrow reveal d1">The Nikah</p>
+        <p class="eyebrow reveal d1">Nikah</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <p class="date-chip reveal d3">Tuesday · 10th November</p>
-        <p class="body-copy reveal d4" style="margin-top:30px;">We all leave for the Nikah by <span class="gold-inline">8:00</span> PM to the bride's venue</p>
+        <p class="body-copy reveal d4" style="margin-top:30px;">Barat leaves at <span class="gold-inline nowrap">8:00&nbsp;PM</span> for the Nikah</p>
       </div>
     </section>
 
     <!-- 7 : walima — Nov 11 -->
     <section class="scene" data-scene="3d">
       <div class="inner">
-        <p class="eyebrow reveal d1">The Walima</p>
+        <p class="eyebrow reveal d1">Walima</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <div class="df-zoom"><div class="date-frame bloom d3">
           <p class="date-num">11<sup class="date-ord">th</sup></p>
           <p class="date-month">November</p>
           <p class="date-year">Wednesday · 2026</p>
         </div></div>
-        <p class="body-copy reveal d4" style="margin-top:26px;">Doors open at <span class="gold-inline">8:00</span> in the evening</p>
-        <p class="body-copy reveal d5">Bridal entry at <span class="gold-inline">9:00</span></p>
+        <p class="body-copy reveal d4" style="margin-top:26px;">Doors open at <span class="gold-inline nowrap">8:00&nbsp;PM</span></p>
+        <p class="body-copy reveal d5">Bridal entry at <span class="gold-inline nowrap">9:00&nbsp;PM</span></p>
         <p class="body-copy reveal d6">Followed by dinner</p>
       </div>
     </section>
@@ -665,7 +669,7 @@
     <!-- 8 : walima venue -->
     <section class="scene" data-scene="4">
       <div class="inner">
-        <p class="eyebrow reveal d1">The Venue</p>
+        <p class="eyebrow reveal d1">Venue</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <h2 class="venue reveal d3"><span class="letters" data-text="SR Ground"></span></h2>
         <p class="venue-sub reveal d4">We look forward to welcoming you</p>
@@ -720,7 +724,7 @@
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <p class="body-copy reveal d3">Awaiting your gracious presence</p>
         <p class="body-copy reveal d4">to bless the couple on their new journey</p>
-        <p class="eyebrow reveal d5" style="margin-top:34px; margin-bottom:0;">Hamdi Farid &nbsp;·&nbsp; Inash Kharbe</p>
+        <p class="eyebrow reveal d5 names-line" style="margin-top:34px; margin-bottom:0;"><span class="nowrap">Hamdi Farid</span> <span class="sep">&nbsp;·&nbsp;</span> <span class="nowrap">Inash Kharbe</span></p>
       </div>
     </section>
   </main>
@@ -728,7 +732,7 @@
   <!-- ENVELOPE INTRO -->
   <div id="intro">
     <div class="intro-head">
-      <p class="intro-eyebrow">The Wedding Of</p>
+      <p class="intro-eyebrow">You Are Invited</p>
       <p class="intro-script">Hamdi &amp; Inash</p>
     </div>
     <div class="envelope-wrap">
@@ -794,7 +798,7 @@
           io.unobserve(en.target);
         }
       });
-    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -2% 0px' });
     sections.forEach(function(s){ io.observe(s); });
   }
 
@@ -1108,10 +1112,10 @@
       document.getElementById('mute').classList.add('show');
       startObserving();
       onScroll();
-    }, 3000);
+    }, 4300);
     setTimeout(function(){
       intro.classList.add('hidden');
-    }, 3100);
+    }, 4400);
   });
 
   /* ============ particles (gold dust + petals + sparkles) ============ */
