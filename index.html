@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#0d0a08" />
+<!-- Samsung Internet: stop forced dark mode from re-tinting the page -->
+<meta name="darkreader-lock" content="true" />
+<meta name="google" content="notranslate" />
+<style id="samsung-dark-guard">
+  /* force-restore original colors if Samsung Internet dark mode inverts them */
+  @supports (-webkit-hyphens:none){
+    #stage, #intro, body{
+      -webkit-text-fill-color:initial;
+    }
+  }
+</style>
 <title>Hamdi &amp; Inash — Wedding Invitation</title>
 <meta name="description" content="With your families, Hamdi Farid & Inash Kharbe request the honour of your presence at their wedding." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -900,12 +911,26 @@
     jRaf = requestAnimationFrame(step);
   }
 
+  /* fireworks salute when the road reaches the Walima */
+  var fwHooked = false;
+  function hookFireworks(){
+    if (fwHooked || !jprog) return;
+    fwHooked = true;
+    var check = setInterval(function(){
+      if (jPlayed && jprog.style.strokeDashoffset === '0'){
+        clearInterval(check);
+        setTimeout(fireworksStart, 250);
+      }
+    }, 300);
+  }
+
   var jObserver = null;
   if ('IntersectionObserver' in window && journey){
     jObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if (en.isIntersecting){
           playJourney();
+          hookFireworks();
           jObserver.unobserve(en.target);
         }
       });
@@ -1253,6 +1278,82 @@
     ctx2d.restore();
   }
 
+  /* rockets + fireworks when the road journey completes */
+  function drawRocket(p){
+    ctx2d.save();
+    ctx2d.translate(p.x, p.y);
+    var g = ctx2d.createRadialGradient(0,0,0, 0,0,10);
+    g.addColorStop(0, 'rgba(255,248,220,.95)');
+    g.addColorStop(0.4, 'rgba(255,200,90,.6)');
+    g.addColorStop(1, 'rgba(255,180,60,0)');
+    ctx2d.fillStyle = g;
+    ctx2d.beginPath();
+    ctx2d.arc(0,0,10,0,Math.PI*2);
+    ctx2d.fill();
+    ctx2d.strokeStyle = 'rgba(255,220,140,.35)';
+    ctx2d.lineWidth = 1.5;
+    ctx2d.beginPath();
+    ctx2d.moveTo(0,8); ctx2d.lineTo(0,26);
+    ctx2d.stroke();
+    ctx2d.restore();
+  }
+
+  function drawFw(p){
+    var tw = 0.5 + 0.5 * (0.5 + 0.5*Math.sin(p.twinkle));
+    var a = p.alpha * tw * p.life;
+    ctx2d.save();
+    ctx2d.translate(p.x, p.y);
+    var g = ctx2d.createRadialGradient(0,0,0, 0,0,p.r*3);
+    g.addColorStop(0, 'hsla('+p.hue+',95%,86%,'+a+')');
+    g.addColorStop(0.5, 'hsla('+p.hue+',95%,62%,'+(a*0.7)+')');
+    g.addColorStop(1, 'hsla('+p.hue+',95%,55%,0)');
+    ctx2d.fillStyle = g;
+    ctx2d.beginPath();
+    ctx2d.arc(0,0,p.r*3,0,Math.PI*2);
+    ctx2d.fill();
+    ctx2d.restore();
+  }
+
+  function explode(x, y){
+    if (reduced) return;
+    var baseHue = 42 + Math.random()*10;
+    for (var i=0;i<34;i++){
+      var ang = Math.random()*Math.PI*2;
+      var spd = 0.8 + Math.random()*3.2;
+      parts.push({
+        x:x, y:y, r:0.8 + Math.random()*1.6,
+        vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd,
+        sway:Math.random()*Math.PI*2, swaySpeed:0.008,
+        rot:0, rotSpeed:0,
+        alpha:0.95, type:'fw',
+        hue:(Math.random()<0.25 ? 50 : baseHue),
+        twinkle:Math.random()*Math.PI*2, twinkleSpeed:0.06 + Math.random()*0.08,
+        life:1, decay:0.008 + Math.random()*0.01
+      });
+    }
+  }
+
+  var fwDone = false;
+  function launchFirework(delay){
+    setTimeout(function(){
+      var host = document.querySelector('.journey') || document.body;
+      var r = host.getBoundingClientRect();
+      var x = Math.max(40, Math.min(W-40, r.left + r.width*(0.25 + Math.random()*0.5)));
+      parts.push({
+        x:x, y:H+10, r:2.2,
+        vx:(Math.random()-0.5)*0.8, vy:-(9 + Math.random()*3.5),
+        sway:0, swaySpeed:0, rot:0, rotSpeed:0,
+        alpha:1, type:'rocket', hue:45,
+        twinkle:0, twinkleSpeed:0, life:1, decay:0.004
+      });
+    }, delay);
+  }
+  function fireworksStart(){
+    if (fwDone || reduced) return;
+    fwDone = true;
+    [0, 280, 560, 950].forEach(launchFirework);
+  }
+
   function tick(){
     ctx2d.clearRect(0,0,W,H);
     for (var i=parts.length-1;i>=0;i--){
@@ -1264,7 +1365,19 @@
       p.rot += p.rotSpeed;
       if (p.life !== undefined){
         p.life -= p.decay;
-        p.vy += 0.02;
+        if (p.type === 'rocket'){
+          p.vy += 0.035; // gravity slows the climb
+          p.vx += Math.sin(p.twinkle += 0.05) * 0.02;
+          if (p.vy >= -0.5){ // apogee -> explode
+            explode(p.x, p.y);
+            parts.splice(i,1);
+            continue;
+          }
+        } else if (p.type === 'fw' || p.type === 'sparkle'){
+          p.vy += 0.02;
+        } else {
+          p.vy += 0.02;
+        }
         if (p.life <= 0){ parts.splice(i,1); continue; }
       } else if (p.y < -30){
         parts[i] = makeParticle();
@@ -1273,6 +1386,8 @@
       if (p.type === 'petal'){ drawPetal(p); }
       else if (p.type === 'sparkle'){ drawSparkle(p); }
       else if (p.type === 'ember'){ drawEmber(p); }
+      else if (p.type === 'rocket'){ drawRocket(p); }
+      else if (p.type === 'fw'){ drawFw(p); }
       else { drawDust(p); }
     }
     requestAnimationFrame(tick);
