@@ -1309,22 +1309,31 @@
     var dist = Math.sqrt(dx*dx + dy*dy);
     ctx2d.save();
     if (dist > 0.6){
-      // elongated streak: bright head, warm tail
-      var light = Math.min(92, 55 + p.life*35);
-      ctx2d.strokeStyle = 'hsla('+p.hue+',90%,'+light+'%,'+(a*0.9)+')';
-      ctx2d.lineWidth = p.r * (0.6 + p.life*0.9);
+      // elongated streak: bright head + soft glow underlay so it reads on dark screens
+      var light = Math.min(94, 58 + p.life*36);
+      var lw = p.r * (1.0 + p.life*1.4);
+      // glow underlay
+      ctx2d.strokeStyle = 'hsla('+p.hue+',95%,60%,'+(a*0.28)+')';
+      ctx2d.lineWidth = lw * 3.2;
       ctx2d.lineCap = 'round';
       ctx2d.beginPath();
       ctx2d.moveTo(p.px, p.py);
       ctx2d.lineTo(p.x, p.y);
       ctx2d.stroke();
+      // bright core streak
+      ctx2d.strokeStyle = 'hsla('+p.hue+',90%,'+light+'%,'+(a*0.95)+')';
+      ctx2d.lineWidth = lw;
+      ctx2d.beginPath();
+      ctx2d.moveTo(p.px, p.py);
+      ctx2d.lineTo(p.x, p.y);
+      ctx2d.stroke();
     } else {
-      var g = ctx2d.createRadialGradient(0,0,0, 0,0,p.r*2.4);
-      g.addColorStop(0, 'hsla('+p.hue+',95%,88%,'+a+')');
+      var g = ctx2d.createRadialGradient(0,0,0, 0,0,p.r*3);
+      g.addColorStop(0, 'hsla('+p.hue+',95%,90%,'+a+')');
       g.addColorStop(1, 'hsla('+p.hue+',95%,55%,0)');
       ctx2d.fillStyle = g;
       ctx2d.beginPath();
-      ctx2d.arc(0,0,p.r*2.4,0,Math.PI*2);
+      ctx2d.arc(0,0,p.r*3,0,Math.PI*2);
       ctx2d.fill();
     }
     ctx2d.restore();
@@ -1333,11 +1342,11 @@
   function drawFlash(p){
     // expanding bright core flash at burst
     var a = Math.max(0, p.life);
-    var rad = (1 - p.life) * 46 + 4;
+    var rad = (1 - p.life) * 90 + 6;
     ctx2d.save();
     var g = ctx2d.createRadialGradient(0,0,0, 0,0,rad);
-    g.addColorStop(0, 'hsla(46,100%,88%,'+(a*0.9)+')');
-    g.addColorStop(0.4, 'hsla(42,95%,65%,'+(a*0.5)+')');
+    g.addColorStop(0, 'hsla(46,100%,90%,'+(a*0.95)+')');
+    g.addColorStop(0.35, 'hsla(42,95%,68%,'+(a*0.55)+')');
     g.addColorStop(1, 'hsla(40,90%,55%,0)');
     ctx2d.fillStyle = g;
     ctx2d.beginPath();
@@ -1390,17 +1399,14 @@
     setTimeout(function(){
       var host = document.querySelector('.journey') || document.body;
       var r = host.getBoundingClientRect();
-      // burst zone: upper-middle band of the journey section, always on-screen
-      var top = Math.max(60, r.top);
-      var bottom = Math.min(H - 140, r.top + r.height * 0.55);
-      if (bottom <= top) bottom = top + 80;
-      var x = Math.max(40, Math.min(W - 40, r.left + r.width * (0.2 + Math.random() * 0.6)));
+      // HIGH burst zone: upper 45% of the viewport — rockets climb high then bloom
+      var top = Math.max(50, r.top * 0.4);
+      var bottom = Math.max(top + 60, Math.min(H * 0.42, r.top + r.height * 0.28));
+      var x = Math.max(50, Math.min(W - 50, r.left + r.width * (0.15 + Math.random() * 0.7)));
       var y = top + Math.random() * (bottom - top);
-      // rise for ~1.6–2.0s (vy tuned so rocket stays on-screen at apogee)
-      var vy = -(4.2 + Math.random() * 1.6);
       parts.push({
         x:x, y:H + 10, r:2.2,
-        vx:(Math.random() - 0.5) * 0.8, vy:vy,
+        vx:(Math.random() - 0.5) * 0.8, vy:-(6.5 + Math.random() * 1.5),
         sway:0, swaySpeed:0, rot:0, rotSpeed:0,
         alpha:1, type:'rocket', hue:45,
         targetY:y,
