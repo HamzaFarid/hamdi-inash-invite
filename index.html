@@ -859,7 +859,7 @@
     jprog.style.strokeDashoffset = jPathLen * (1 - t);
 
     var pt = pathPoint(t);
-    var tf = 'translate(' + pt.x.toFixed(1) + 'px,' + pt.y.toFixed(1) + 'px)';
+    var tf = 'translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ')';
     jdot.setAttribute('transform', tf);
     jhalo.setAttribute('transform', tf);
     jhalo.setAttribute('opacity', t > 0.001 ? '0.85' : '0');
@@ -1114,8 +1114,10 @@
 
   function resize(){
     DPR = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.clientWidth = window.innerWidth;
-    H = canvas.clientHeight = window.innerHeight;
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
     canvas.width = W * DPR;
     canvas.height = H * DPR;
     ctx2d.setTransform(DPR,0,0,DPR,0,0);
