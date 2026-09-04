@@ -607,9 +607,9 @@
         <p class="script-line reveal d3" style="font-size:clamp(38px,12vw,84px);">Dance &amp; Dhamal</p>
         <p class="date-chip reveal d4" style="margin-top:10px;">8th November</p>
         <p class="body-copy reveal d5" style="margin-top:24px;">from <span class="gold-inline">5:00</span> PM onwards</p>
-        <h2 class="venue reveal d5" style="font-size:clamp(28px,9vw,60px); margin-top:18px;">White Villa</h2>
+        <p class="body-copy reveal d6">Join us for tea and snacks followed by dinner and dance</p>
+        <h2 class="venue reveal d6" style="font-size:clamp(28px,9vw,60px); margin-top:18px;">White Villa</h2>
         <p class="venue-sub reveal d6">Naddi Naka</p>
-        <a class="maplink reveal d6" href="https://www.google.com/maps/search/?api=1&amp;query=White+Villa+Naddi+Naka" target="_blank" rel="noopener">Open in Google Maps</a>
       </div>
     </section>
 
@@ -619,7 +619,9 @@
         <p class="eyebrow reveal d1">The Pankhana</p>
         <div class="ornament reveal d2"><span class="line"></span><span class="diamond"></span><span class="line r"></span></div>
         <p class="date-chip reveal d3">Monday · 9th November</p>
-        <p class="body-copy reveal d4" style="margin-top:30px;">An evening of blessings at the bride's home</p>
+        <p class="body-copy reveal d4" style="margin-top:30px;">Join us to bless Hamdi's last bachelor night followed by dinner</p>
+        <h2 class="venue reveal d5" style="font-size:clamp(28px,9vw,60px); margin-top:18px;">White Villa</h2>
+        <p class="venue-sub reveal d6">Naddi Naka</p>
       </div>
     </section>
 
@@ -666,27 +668,32 @@
         <div class="j-sticky">
           <p class="script-line j-title">The Road to the Big Day</p>
           <svg class="j-svg" viewBox="0 0 460 620" aria-label="Wedding week journey">
-            <path class="j-base" d="M 90 560 C 90 480, 340 470, 340 390 C 340 390, 110 380, 110 300 C 110 220, 350 210, 350 130 C 350 90, 300 70, 230 60"/>
-            <path class="j-prog" id="jprog" d="M 90 560 C 90 480, 340 470, 340 390 C 340 390, 110 380, 110 300 C 110 220, 350 210, 350 130 C 350 90, 300 70, 230 60"/>
+            <path class="j-base" d="M 110 560 C 110 495, 350 500, 350 435 C 350 370, 110 375, 110 310 C 110 245, 350 250, 350 185 C 350 120, 285 108, 230 60"/>
+            <path class="j-prog" id="jprog" d="M 110 560 C 110 495, 350 500, 350 435 C 350 370, 110 375, 110 310 C 110 245, 350 250, 350 185 C 350 120, 285 108, 230 60"/>
             <g class="jstop" data-stop="0">
-              <rect x="26" y="536" width="128" height="48" rx="6"/>
-              <text class="j-day" x="90" y="556">SAT · NOV 7</text>
-              <text class="j-evt" x="90" y="578">Mehndi</text>
+              <rect x="40" y="536" width="140" height="48" rx="8"/>
+              <text class="j-day" x="110" y="556">SAT · NOV 7</text>
+              <text class="j-evt" x="110" y="578">Mehndi</text>
             </g>
             <g class="jstop" data-stop="1">
-              <rect x="276" y="366" width="128" height="48" rx="6"/>
-              <text class="j-day" x="340" y="386">MON · NOV 9</text>
-              <text class="j-evt" x="340" y="408">Pankhana</text>
+              <rect x="280" y="411" width="140" height="48" rx="8"/>
+              <text class="j-day" x="350" y="431">SUN · NOV 8</text>
+              <text class="j-evt" x="350" y="453">Sangeet</text>
             </g>
             <g class="jstop" data-stop="2">
-              <rect x="46" y="276" width="128" height="48" rx="6"/>
-              <text class="j-day" x="110" y="296">TUE · NOV 10</text>
-              <text class="j-evt" x="110" y="318">Nikah</text>
+              <rect x="40" y="286" width="140" height="48" rx="8"/>
+              <text class="j-day" x="110" y="306">MON · NOV 9</text>
+              <text class="j-evt" x="110" y="328">Pankhana</text>
             </g>
             <g class="jstop" data-stop="3">
-              <rect x="286" y="46" width="128" height="48" rx="6"/>
-              <text class="j-day" x="350" y="66">WED · NOV 11</text>
-              <text class="j-evt" x="350" y="88">Walima</text>
+              <rect x="280" y="161" width="140" height="48" rx="8"/>
+              <text class="j-day" x="350" y="181">TUE · NOV 10</text>
+              <text class="j-evt" x="350" y="203">Nikah</text>
+            </g>
+            <g class="jstop" data-stop="4">
+              <rect x="160" y="36" width="140" height="48" rx="8"/>
+              <text class="j-day" x="230" y="56">WED · NOV 11</text>
+              <text class="j-evt" x="230" y="78">Walima</text>
             </g>
             <circle id="jdot" r="6"/>
             <circle id="jhalo" r="16"/>
@@ -780,12 +787,10 @@
     sections.forEach(function(s){ io.observe(s); });
   }
 
-  /* ============ scroll progress + parallax + skew + hint ============ */
+  /* ============ scroll progress + parallax + hint ============ */
   var scrollbar = document.getElementById('scrollbar');
   var scrollhint = document.getElementById('scrollhint');
   var ticking = false;
-  var lastY = window.scrollY || 0;
-  var skew = 0;
 
   function onScroll(){
     var doc = document.documentElement;
@@ -799,19 +804,13 @@
 
     if (!reduced){
       var vh = window.innerHeight;
-      // scroll velocity -> subtle skew (clamped)
-      var vel = y - lastY; lastY = y;
-      skew += ((Math.max(-8, Math.min(8, vel * 0.12)) - skew) * 0.12);
-      if (Math.abs(skew) < 0.05) skew = 0;
-      var sk = 'skewY(' + skew.toFixed(2) + 'deg)';
-
       sections.forEach(function(s){
         var r = s.getBoundingClientRect();
         var center = r.top + r.height/2 - vh/2;
         var off = center * -0.055;
         var inner = s.querySelector('.inner');
         if (inner){
-          inner.style.transform = 'translateY(' + off.toFixed(1) + 'px) ' + ('skewY(' + skew.toFixed(2) + 'deg)');
+          inner.style.transform = 'translateY(' + off.toFixed(1) + 'px)';
           inner.style.willChange = 'transform';
         }
       });
