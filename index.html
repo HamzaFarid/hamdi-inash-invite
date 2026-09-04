@@ -906,7 +906,15 @@
       var e = u < 0.5 ? 2*u*u : 1 - Math.pow(-2*u + 2, 2)/2;
       paintJourney(e);
       if (u < 1){ jRaf = requestAnimationFrame(step); }
-      else { paintJourney(1); setTimeout(fireworksStart, 350); }
+      else {
+        paintJourney(1);
+        // marker has arrived at the Walima — fade it out, then fireworks
+        jdot.style.transition = 'opacity .6s ease';
+        jhalo.style.transition = 'opacity .6s ease';
+        jdot.style.opacity = '0';
+        jhalo.style.opacity = '0';
+        setTimeout(fireworksStart, 350);
+      }
     }
     jRaf = requestAnimationFrame(step);
   }
