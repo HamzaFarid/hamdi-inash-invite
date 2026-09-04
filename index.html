@@ -1328,6 +1328,7 @@
       ctx2d.lineTo(p.x, p.y);
       ctx2d.stroke();
     } else {
+      ctx2d.translate(p.x, p.y);
       var g = ctx2d.createRadialGradient(0,0,0, 0,0,p.r*3);
       g.addColorStop(0, 'hsla('+p.hue+',95%,90%,'+a+')');
       g.addColorStop(1, 'hsla('+p.hue+',95%,55%,0)');
@@ -1344,6 +1345,7 @@
     var a = Math.max(0, p.life);
     var rad = (1 - p.life) * 90 + 6;
     ctx2d.save();
+    ctx2d.translate(p.x, p.y);
     var g = ctx2d.createRadialGradient(0,0,0, 0,0,rad);
     g.addColorStop(0, 'hsla(46,100%,90%,'+(a*0.95)+')');
     g.addColorStop(0.35, 'hsla(42,95%,68%,'+(a*0.55)+')');
