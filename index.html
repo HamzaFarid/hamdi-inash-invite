@@ -1404,7 +1404,8 @@
       // HIGH burst zone: upper 45% of the viewport — rockets climb high then bloom
       var top = Math.max(50, r.top * 0.4);
       var bottom = Math.max(top + 60, Math.min(H * 0.42, r.top + r.height * 0.28));
-      var x = Math.max(50, Math.min(W - 50, r.left + r.width * (0.15 + Math.random() * 0.7)));
+      // spread wide across the full width for a proper barrage
+      var x = Math.max(45, Math.min(W - 45, r.left + r.width * (0.06 + Math.random() * 0.88)));
       var y = top + Math.random() * (bottom - top);
       parts.push({
         x:x, y:H + 10, r:2.2,
@@ -1419,7 +1420,8 @@
   function fireworksStart(){
     if (fwDone || reduced) return;
     fwDone = true;
-    [0, 280, 560, 950].forEach(launchFirework);
+    // quick barrage: first three almost together, then two spread-out follow-ups
+    [0, 150, 320, 700, 1100].forEach(launchFirework);
   }
 
   function tick(){
